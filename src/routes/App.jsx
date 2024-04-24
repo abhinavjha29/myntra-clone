@@ -2,9 +2,10 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "bootstrap/dist/js/bootstrap.min.js";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import DisplayItem from "./components/DisplayItem";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import DisplayItem from "../components/DisplayItem";
+import { Outlet } from "react-router-dom";
 
 function App() {
   const item = {
@@ -25,11 +26,7 @@ function App() {
   return (
     <>
       <Header />
-      <main>
-        <div className="items-container">
-          <DisplayItem item={item} />
-        </div>
-      </main>
+      <Outlet />
       <Footer />
     </>
   );
