@@ -16,13 +16,13 @@ const Header = () => {
         </Link>
       </div>
       <nav className="nav_bar">
-        <a href="#">Men</a>
+        <Link to="/single">Men</Link>
         <a href="#">Women</a>
         <a href="#">Kids</a>
         <a href="#">Home & Living</a>
         <a href="#">Beauty</a>
         <a href="#">
-          Studio <sup>New</sup>
+          Admin <sup>New</sup>
         </a>
       </nav>
       <div className="search_bar">

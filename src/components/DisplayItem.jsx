@@ -5,14 +5,18 @@ const DisplayItem = ({ item }) => {
     <div className="item-container">
       <img className="item-image" src={item.image} alt="item image" />
       <div className="rating">
-        {item.rating.stars} ⭐ | {item.rating.count}
+        {item.rating.rate} ⭐ | {item.rating.count}
       </div>
-      <div className="company-name">{item.company}</div>
-      <div className="item-name">{item.item_name}</div>
+      <div className="company-name">{item.category}</div>
+      <div className="item-name">{item.title}</div>
       <div className="price">
-        <span className="current-price">Rs {item.current_price}</span>
-        <span className="original-price">Rs {item.original_price}</span>
-        <span className="discount">({item.discount_percentage}% OFF)</span>
+        <span className="current-price">Rs {item.price}</span>
+        {item.discount_percentage && (
+          <>
+            <span className="original-price">Rs {item.original_price}</span>
+            <span className="discount">({item.discount_percentage}% OFF)</span>
+          </>
+        )}
       </div>
       <button
         className="btn-add-bag"
