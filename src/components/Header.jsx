@@ -2,18 +2,18 @@ import React from "react";
 import { FaGrinHearts } from "react-icons/fa";
 import { FiShoppingBag } from "react-icons/fi";
 import { IoPerson } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 const Header = () => {
   return (
     <header>
       <div className="logo_container">
-        <Link href="#">
+        <NavLink to="/">
           <img
             className="myntra_home"
             src="images/myntra_logo.webp"
             alt="Myntra Home"
           />
-        </Link>
+        </NavLink>
       </div>
       <nav className="nav_bar">
         <Link to="/single">Men</Link>

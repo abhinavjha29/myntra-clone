@@ -43,7 +43,7 @@ const BagItem = () => {
 
       <div
         className="remove-from-cart"
-        onclick={() => console.log(" item deleted")}
+        onClick={() => console.log(" item deleted")}
       >
         X
       </div>

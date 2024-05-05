@@ -1,105 +1,94 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Sidebar = () => {
+  const categories = [
+    { name: "electronics", isChecked: false },
+    { name: "jewelery", isChecked: false },
+    { name: "men's clothing", isChecked: false },
+    { name: "women's clothing", isChecked: false },
+  ];
+  const rating = [
+    { name: "4.5+", isChecked: false },
+    { name: "4+", isChecked: false },
+    { name: "3+", isChecked: false },
+    { name: "2+", isChecked: false },
+  ];
+  const handleCheckboxChange = (e) => {
+    console.log(e.target.value);
+  };
+  const handleSortChange = (e) => {
+    console.log(e.target.value);
+  };
   return (
-    <div
-      className="d-flex flex-column flex-shrink-0 p-3 bg-light"
-      style={{ width: "200px" }}
-    >
-      <a
-        href="/"
-        className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
-      >
-        <svg className="bi pe-none me-2" width="40" height="32">
-          <use xlinkHref="#bootstrap"></use>
-        </svg>
-        <span className="fs-4">Sidebar</span>
+    <div className="d-flex flex-column flex-shrink-0 p-3 bg-white border border-top-0 mt-10 sidebar-div">
+      <a className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <span className="fs-4">Filter</span>
       </a>
       <hr />
-      <ul className="nav nav-pills flex-column mb-auto">
-        <li className="nav-item">
-          <a href="#" className="nav-link active" aria-current="page">
-            <svg className="bi pe-none me-2" width="16" height="16">
-              <use xlinkHref="#home"></use>
-            </svg>
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link link-dark">
-            <svg className="bi pe-none me-2" width="16" height="16">
-              <use xlinkHref="#speedometer2"></use>
-            </svg>
-            Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link link-dark">
-            <svg className="bi pe-none me-2" width="16" height="16">
-              <use xlinkHref="#table"></use>
-            </svg>
-            Orders
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link link-dark">
-            <svg className="bi pe-none me-2" width="16" height="16">
-              <use xlinkHref="#grid"></use>
-            </svg>
-            Products
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link link-dark">
-            <svg className="bi pe-none me-2" width="16" height="16">
-              <use xlinkHref="#people-circle"></use>
-            </svg>
-            Customers
-          </a>
-        </li>
-      </ul>
+
+      <div className="mb-3">
+        <label htmlFor="categories">Categories:</label>
+        <div className="form-check">
+          {categories.map((category, index) => (
+            <div className="form-check form-check-inline" key={index}>
+              <input
+                className="form-check-input form-check-input-sm"
+                type="radio"
+                id={`category-${index + 1}`}
+                name="categories[]"
+                value={category.name}
+                // checked={category.isChecked}
+                onChange={(e) => handleCheckboxChange(e)}
+              />
+              <label
+                className="form-check-label text-sm"
+                htmlFor={`category-${index + 1}`}
+              >
+                {category.name}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
       <hr />
-      <div className="dropdown">
-        <a
-          href="#"
-          className="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
+      <div className="d-inline-block">
+        <label htmlFor="sortDropdown">Sort by:</label>
+        <select
+          className="form-select form-select-sm"
+          id="sortDropdown"
+          // value={selectedSort}
+          onChange={handleSortChange}
         >
-          <img
-            src="https://github.com/mdo.png"
-            alt=""
-            width="32"
-            height="32"
-            className="rounded-circle me-2"
-          />
-          <strong>mdo</strong>
-        </a>
-        <ul className="dropdown-menu text-small shadow" style={{}}>
-          <li>
-            <a className="dropdown-item" href="#">
-              New project...
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Settings
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Profile
-            </a>
-          </li>
-          <li>
-            <hr className="dropdown-divider" />
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Sign out
-            </a>
-          </li>
-        </ul>
+          <option value="default">Default</option>
+          <option value="lowest-price">Price (Lowest First)</option>
+          <option value="highest-price">Price (Highest First)</option>
+          <option value="highest-rating">Rating (Highest First)</option>
+        </select>
+      </div>
+      <hr />
+      <div className="mb-3">
+        <label htmlFor="categories">Rating:</label>
+        <div className="form-check mt-2">
+          {rating.map((rating, index) => (
+            <div className="form-check " key={index}>
+              <input
+                className="form-check-input form-check-input-sm"
+                type="checkbox"
+                id={`rating-${index + 1}`}
+                // name="categories[]"
+                value={rating.name}
+                // checked={category.isChecked}
+                onChange={(e) => handleCheckboxChange(e)}
+              />
+              <label
+                className="form-check-label text-sm"
+                htmlFor={`category-${index + 1}`}
+              >
+                {rating.name}
+              </label>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

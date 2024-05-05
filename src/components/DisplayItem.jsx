@@ -1,29 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/Slice/ProductSlice";
 
 const DisplayItem = ({ item }) => {
+  const dispatch = useDispatch();
+  const [isFocused, setIsFocused] = useState(false);
+  const addState = () => {
+    setIsFocused(true);
+  };
+  const removeState = () => {
+    setIsFocused(false);
+  };
+  const handleAddToBagbtn = (e) => {
+    e.preventDefault();
+
+    dispatch(addToCart(item));
+  };
   return (
-    <div className="item-container">
-      <img className="item-image" src={item.image} alt="item image" />
-      <div className="rating">
-        {item.rating.rate} ⭐ | {item.rating.count}
+    <div
+      className="card item-container border-0 position-relative"
+      onMouseEnter={() => addState()}
+      onMouseLeave={() => removeState()}
+    >
+      <img className="item-image " src={item.thumbnail} alt="item image" />
+      {isFocused && <button className="btn btn-info">Add to Wishlist</button>}
+
+      <div className="card-body">
+        <div className="rating">
+          {item.rating} ⭐ | {item.rating.count}
+        </div>
+        <div className="company-name">{item.category}</div>
+        <div className="item-name">{item.title}</div>
+        <div className="price">
+          <span className="current-price">Rs {item.price}</span>
+          {item.discountPercentage && (
+            <>
+              <span className="original-price">
+                Rs
+                {(
+                  item.price +
+                  item.price * (item.discountPercentage / 100)
+                ).toFixed(0)}
+              </span>
+              <span className="discount">
+                ({item.discountPercentage.toFixed(0)}% OFF)
+              </span>
+            </>
+          )}
+        </div>
+        <button className="btn-add-bag" onClick={(e) => handleAddToBagbtn(e)}>
+          Add to Bag
+        </button>
       </div>
-      <div className="company-name">{item.category}</div>
-      <div className="item-name">{item.title}</div>
-      <div className="price">
-        <span className="current-price">Rs {item.price}</span>
-        {item.discount_percentage && (
-          <>
-            <span className="original-price">Rs {item.original_price}</span>
-            <span className="discount">({item.discount_percentage}% OFF)</span>
-          </>
-        )}
-      </div>
-      <button
-        className="btn-add-bag"
-        onClick={() => console.log("item clicked")}
-      >
-        Add to Bag
-      </button>
     </div>
   );
 };

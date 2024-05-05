@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchAllProducts } from "../API/ProductAPI";
+import { fetchAllProducts, fetchProductByPage } from "../API/ProductAPI";
 
 const initialState = {
-  products: [],
+  allProducts: [],
+  cartProducts: [],
   status: "idle",
+  products: [],
 };
 
 export const fetchAllProductsAsync = createAsyncThunk(
@@ -11,24 +13,53 @@ export const fetchAllProductsAsync = createAsyncThunk(
   async () => {
     const response = await fetchAllProducts();
     console.log(response);
-    return response;
+    return response.products;
   }
 );
 
+export const fetchProductByPageAsync = createAsyncThunk(
+  "product/fetchProductsByPage",
+  async ({ page, limit }) => {
+    console.log(page, limit);
+    const response = await fetchProductByPage(page, limit);
+    return response.products;
+  }
+);
 export const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {},
+  reducers: {
+    addToCart: (state, action) => {
+      console.log(action.payload);
+      const { id } = action.payload;
+      const existingProduct = state.cartProducts.find((item) => item.id === id);
+      if (existingProduct) {
+        existingProduct.quantity++;
+      } else {
+        state.cartProducts.push({ ...action.payload, quantity: 1 });
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllProductsAsync.pending, (state) => {
         state.status = "pending";
       })
       .addCase(fetchAllProductsAsync.fulfilled, (state, action) => {
-        (state.status = "succes"), (state.products = action.payload);
+        (state.status = "succes"), (state.allProducts = action.payload);
       })
       .addCase(fetchAllProductsAsync.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(fetchProductByPageAsync.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(fetchProductByPageAsync.fulfilled, (state, action) => {
+        (state.status = "succes"), (state.products = action.payload);
+      })
+      .addCase(fetchProductByPageAsync.rejected, (state) => {
         state.status = "failed";
       });
   },
 });
+export const { addToCart } = productSlice.actions;
