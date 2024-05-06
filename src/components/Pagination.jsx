@@ -31,7 +31,7 @@ const Pagination = ({ totalPages, setPage, page }) => {
           </a>
         </li>
         {totalPage.map((page) => (
-          <li className="page-item">
+          <li className="page-item " key={page}>
             <button className="page-link" onClick={(e) => gotoPage(e, page)}>
               {page}
             </button>

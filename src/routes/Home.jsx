@@ -8,10 +8,12 @@ import {
 } from "../store/Slice/ProductSlice";
 import Pagination from "../components/Pagination";
 import { fetchProductByPage } from "../store/API/ProductAPI";
+import Spinner from "../components/Spinner";
 
 const Home = () => {
   const [page, setPage] = useState(0);
   const dispatch = useDispatch();
+  let status = useSelector((state) => state.product.status);
   useEffect(() => {
     dispatch(fetchAllProductsAsync());
     dispatch(fetchProductByPageAsync({ page, limit }));
@@ -28,23 +30,30 @@ const Home = () => {
   console.log(page);
   const handlePagination = () => {};
   return (
-    <main className="main-class">
-      <div className="row">
-        <div className="col-auto">
-          <Sidebar />
-        </div>
-        <div className="col-md">
-          <div className="items-container">
-            {product.map((item) => (
-              <DisplayItem key={item.id} item={item} />
-            ))}
+    <>
+      {status === "pending" && <Spinner />}
+      <main className="main-class">
+        <div className="row">
+          <div className="col-auto">
+            <Sidebar />
           </div>
-          <div className="pagination-container">
-            <Pagination page={page} totalPages={totalPages} setPage={setPage} />
+          <div className="col-md">
+            <div className="items-container">
+              {product.map((item) => (
+                <DisplayItem key={item.id} item={item} />
+              ))}
+            </div>
+            <div className="pagination-container">
+              <Pagination
+                page={page}
+                totalPages={totalPages}
+                setPage={setPage}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 };
 

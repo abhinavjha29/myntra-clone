@@ -408,3 +408,12 @@ a.action_container:link {
   justify-content: center;
   margin-top: 20px;
 }
+
+.spinner {
+  height: 8rem;
+  width: 8rem;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/Slice/ProductSlice";
+import { Link } from "react-router-dom";
 
 const DisplayItem = ({ item }) => {
   const dispatch = useDispatch();
+
   const [isFocused, setIsFocused] = useState(false);
   const addState = () => {
     setIsFocused(true);
@@ -22,9 +24,15 @@ const DisplayItem = ({ item }) => {
       onMouseEnter={() => addState()}
       onMouseLeave={() => removeState()}
     >
-      <img className="item-image " src={item.thumbnail} alt="item image" />
+      <Link to={`/single/${item.id}`}>
+        <img
+          className="item-image "
+          src={item.thumbnail}
+          alt="item image"
+          onClick={() => console.log(item)}
+        />
+      </Link>
       {isFocused && <button className="btn btn-info">Add to Wishlist</button>}
-
       <div className="card-body">
         <div className="rating">
           {item.rating} ⭐ | {item.rating.count}

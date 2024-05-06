@@ -1,11 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchAllProducts, fetchProductByPage } from "../API/ProductAPI";
+import { act } from "react";
+import axios from "axios";
 
 const initialState = {
   allProducts: [],
   cartProducts: [],
-  status: "idle",
+  status: "",
   products: [],
+  singleProduct: {},
   totalQuantity: 0,
 };
 
@@ -24,6 +27,14 @@ export const fetchProductByPageAsync = createAsyncThunk(
     console.log(page, limit);
     const response = await fetchProductByPage(page, limit);
     return response.products;
+  }
+);
+export const fetchSingleProductAsync = createAsyncThunk(
+  "product/fetchSinglePrdouct",
+  async (id) => {
+    console.log(id);
+    const response = await axios.get(`https://dummyjson.com/products/${id}`);
+    return response.data;
   }
 );
 export const productSlice = createSlice({
@@ -48,6 +59,7 @@ export const productSlice = createSlice({
       state.cartProducts = tempProduct;
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllProductsAsync.pending, (state) => {
@@ -66,6 +78,15 @@ export const productSlice = createSlice({
         (state.status = "succes"), (state.products = action.payload);
       })
       .addCase(fetchProductByPageAsync.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(fetchSingleProductAsync.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(fetchSingleProductAsync.fulfilled, (state, action) => {
+        (state.status = "succes"), (state.singleProduct = action.payload);
+      })
+      .addCase(fetchSingleProductAsync.rejected, (state) => {
         state.status = "failed";
       });
   },
