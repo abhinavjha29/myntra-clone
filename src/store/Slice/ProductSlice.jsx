@@ -31,7 +31,6 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      console.log(action.payload);
       const { id } = action.payload;
       const existingProduct = state.cartProducts.find((item) => item.id === id);
       if (existingProduct) {
@@ -40,6 +39,13 @@ export const productSlice = createSlice({
         state.cartProducts.push({ ...action.payload, quantity: 1 });
       }
       state.totalQuantity++;
+    },
+    deleteFromCart: (state, action) => {
+      const id = action.payload;
+
+      const tempProduct = state.cartProducts.filter((item) => item.id !== id);
+
+      state.cartProducts = tempProduct;
     },
   },
   extraReducers: (builder) => {
@@ -64,4 +70,4 @@ export const productSlice = createSlice({
       });
   },
 });
-export const { addToCart } = productSlice.actions;
+export const { addToCart, deleteFromCart } = productSlice.actions;

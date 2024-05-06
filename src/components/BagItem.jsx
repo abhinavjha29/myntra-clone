@@ -1,26 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { deleteFromCart } from "../store/Slice/ProductSlice";
 
 const BagItem = ({ item }) => {
-  // const item = {
-  //   id: 9,
-  //   title: "Infinix INBOOK",
-  //   description:
-  //     "Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey – 1 Year Warranty",
-  //   price: 1099,
-  //   discountPercentage: 11.83,
-  //   rating: 4.54,
-  //   stock: 96,
-  //   brand: "Infinix",
-  //   category: "laptops",
-  //   thumbnail: "https://cdn.dummyjson.com/product-images/9/thumbnail.jpg",
-  //   images: [
-  //     "https://cdn.dummyjson.com/product-images/9/1.jpg",
-  //     "https://cdn.dummyjson.com/product-images/9/2.png",
-  //     "https://cdn.dummyjson.com/product-images/9/3.png",
-  //     "https://cdn.dummyjson.com/product-images/9/4.jpg",
-  //     "https://cdn.dummyjson.com/product-images/9/thumbnail.jpg",
-  //   ],
-  // };
+  const dispatch = useDispatch();
+
+  const handleDeleteFromCart = (item) => {
+    const id = item.id;
+
+    dispatch(deleteFromCart(id));
+  };
   console.log(item);
   const return_period = 14;
   const delivery_date = "2 days";
@@ -57,7 +46,7 @@ const BagItem = ({ item }) => {
 
       <div
         className="remove-from-cart"
-        onClick={() => console.log(" item deleted")}
+        onClick={() => handleDeleteFromCart(item)}
       >
         X
       </div>
