@@ -16,12 +16,13 @@ const Home = () => {
     dispatch(fetchAllProductsAsync());
     dispatch(fetchProductByPageAsync({ page, limit }));
   }, [page]);
+
   const productQuantity = useSelector(
     (state) => state.product.allProducts.length
   );
   console.log(productQuantity);
   const product = useSelector((state) => state.product.products);
-
+  console.log(useSelector((state) => state.product.totalQuantity));
   const limit = 12;
   let totalPages = Math.floor(productQuantity / limit) + 1;
   console.log(page);

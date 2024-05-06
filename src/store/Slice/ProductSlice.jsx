@@ -6,6 +6,7 @@ const initialState = {
   cartProducts: [],
   status: "idle",
   products: [],
+  totalQuantity: 0,
 };
 
 export const fetchAllProductsAsync = createAsyncThunk(
@@ -38,6 +39,7 @@ export const productSlice = createSlice({
       } else {
         state.cartProducts.push({ ...action.payload, quantity: 1 });
       }
+      state.totalQuantity++;
     },
   },
   extraReducers: (builder) => {

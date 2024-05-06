@@ -8,13 +8,38 @@ import { useSelector } from "react-redux";
 const Bag = () => {
   const cartProducts = useSelector((state) => state.product.cartProducts);
   console.log(cartProducts);
+  let totalQuantity = useSelector((state) => state.product.totalQuantity);
+  // cartProducts.forEach((item) => {
+  //   totalQuantity = totalQuantity + item.quantity;
+  // });
+  let totalMRP = 0;
+  let totalDiscountedMRP = 0;
+
+  cartProducts.forEach((item) => {
+    totalDiscountedMRP = totalDiscountedMRP + item.quantity * item.price;
+    totalMRP =
+      totalMRP +
+      item.quantity * item.price +
+      Number((item.price * (item.discountPercentage / 100)).toFixed(0));
+  });
+  let totalDiscount = totalMRP - totalDiscountedMRP;
+
+  // console.log("total mrp", totalMRP);
+  // console.log(totalDiscountedMRP);
+  console.log(totalDiscount);
   return (
     <main>
       <div className="bag-page">
         <div className="bag-items-container">
-          <BagItem />
+          {cartProducts.map((item) => (
+            <BagItem item={item} />
+          ))}
         </div>
-        <BagSummary />
+        <BagSummary
+          totalQuantity={totalQuantity}
+          totalMRP={totalMRP}
+          totalDiscount={totalDiscount}
+        />
       </div>
     </main>
   );

@@ -1,26 +1,27 @@
 import React from "react";
 
-const BagSummary = () => {
+const BagSummary = ({ totalQuantity, totalMRP, totalDiscount }) => {
   const bagSummary = {
     totalMRP: 200,
     totalItem: 3,
     totalDiscount: 15,
     finalPayment: 380,
   };
+
   return (
     <div className="bag-summary">
       <div className="bag-details-container">
         <div className="price-header">
-          PRICE DETAILS ({bagSummary.totalItem} Items){" "}
+          PRICE DETAILS ({totalQuantity} Items)
         </div>
         <div className="price-item">
           <span className="price-item-tag">Total MRP</span>
-          <span className="price-item-value">₹{bagSummary.totalMRP}</span>
+          <span className="price-item-value">₹{totalMRP}</span>
         </div>
         <div className="price-item">
           <span className="price-item-tag">Discount on MRP</span>
           <span className="price-item-value priceDetail-base-discount">
-            -₹{bagSummary.totalDiscount}
+            -₹{totalDiscount}
           </span>
         </div>
         <div className="price-item">
@@ -30,7 +31,9 @@ const BagSummary = () => {
         <hr />
         <div className="price-footer">
           <span className="price-item-tag">Total Amount</span>
-          <span className="price-item-value">₹{bagSummary.finalPayment}</span>
+          <span className="price-item-value">
+            ₹{totalMRP - totalDiscount + 99}
+          </span>
         </div>
       </div>
       <button className="btn-place-order">

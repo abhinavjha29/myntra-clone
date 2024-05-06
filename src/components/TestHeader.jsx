@@ -1,11 +1,10 @@
 import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./TestHeader.css";
+import { useSelector } from "react-redux";
 const TestHeader = () => {
-  const navigate = useNavigate();
-  const navigateTo = (e) => {
-    navigate("/");
-  };
+  let totalQuantity = useSelector((state) => state.product.totalQuantity);
+
   return (
     <>
       <div className="navbar-div">
@@ -638,6 +637,9 @@ const TestHeader = () => {
             />
             <br></br>
             <span>Bag</span>
+            <span className="badge rounded-pill bag-item-count">
+              {totalQuantity}
+            </span>
           </p>
         </NavLink>
       </div>
